@@ -1,8 +1,8 @@
-(
-    () => { 
-        console.log('webpack') 
-    }
-    // funkcja strzałkowa
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './Components/App';
 
-)();
-// tzw. IIFE tj. natychmiast wywołujące się wyrażenie funkcyjne
+ReactDOM.render(
+    <App/>,
+    document.querySelector('#root')
+);
