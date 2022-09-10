@@ -1,11 +1,15 @@
-import React, { useState,useEffect } from 'react';
-
-const useLocalStorage = (key, item) => {
-    const saveItem = localStorage.setItem(key,JSON.stringify(item));
-
-    const [storage, setStorage] = useState(saveItem);
-
-    return [storage, setStorage];
-};
+const useLocalStorage = (defaultValue) => {
+    const setLocalStorage = (value) => {
+        return window.localStorage.setItem('tasks', JSON.stringify(value));
+    };
+    const getLocalData = () => {
+        const data = window.localStorage.getItem('tasks');
+        if (data) {
+            return JSON.parse(data);
+        };
+        return defaultValue;
+    };
+    return [getLocalData, setLocalStorage];
+}
 
 export default useLocalStorage;

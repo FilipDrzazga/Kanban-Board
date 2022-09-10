@@ -4,7 +4,7 @@ import TaskContext from '../Context/TaskContext';
 
 const Task = (props) => {
     const { id, idColumn, name, user } = props;
-    const {moveForward,moveBackward} = useContext(TaskContext);
+    const {moveForward,moveBackward,removeTask} = useContext(TaskContext);
     return (
         <>
             <li key={id}>
@@ -16,6 +16,7 @@ const Task = (props) => {
                 </div>
                 <button onClick={(e)=>{moveForward(e,id,idColumn)}}>next</button>
                 <button onClick={(e)=>{moveBackward(e,id,idColumn)}} >prev</button>
+                <button onClick={(e)=>{removeTask(e,id,idColumn)}} >prev</button>
             </li>
         </>
     )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useEffect} from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import ColumnContext from '../Context/ColumnContext';
 import TaskContext from '../Context/TaskContext';
@@ -12,25 +12,17 @@ import Board from './Board';
 
 const App = () => {
 
-
     const [columnState, setColumnState] = useState(columnDescription);
     const [taskState, setTaskState] = useState(taskDescription);
-    console.log(taskState);
+    const [getLocalData, setLocalData] = useLocalStorage(taskState);
 
-    const [taskLocalStorage, setTaskLocalStorage] = useLocalStorage('tasks', taskState);
+    useEffect(() => {
+        setTaskState(getLocalData)
+    }, []);
 
-    const taskHandler = (e, userName, userDescription) => {
-        e.preventDefault();
-        const newTask = {
-            id: taskState.at(-1).id + 1
-            ,
-            name: userDescription,
-            idColumn: 1,
-            user: userName
-        };
-
-        setTaskState(state => { return [...state, newTask] })
-    };
+    useEffect(() => {
+        setLocalData(taskState);
+    }, [taskState]);
 
     const moveForward = (e, id, idColumn) => {
         const nextColumn = columnState.find(column => {
@@ -55,13 +47,13 @@ const App = () => {
         setTaskState([...upDateTasks]);
     };
 
-    const moveBackward = (e,id,idColumn) => {
+    const moveBackward = (e, id, idColumn) => {
         const nextColumn = columnState.find(column => {
             return column.id === idColumn - 1;
         });
 
         const tasksInColumn = taskState.filter(task => {
-            return task.idColumn === idColumn -1
+            return task.idColumn === idColumn - 1
         }).length
 
         if (tasksInColumn >= nextColumn?.limit) {
@@ -76,12 +68,19 @@ const App = () => {
             return task;
         });
         setTaskState([...upDateTasks]);
+    };
+
+    const removeTask = (e,id)=>{
+        const upDateTasks = taskState.filter(task => {
+            return task.id !== id;
+        });
+        setTaskState([...upDateTasks]);
     }
 
     return (
         <ColumnContext.Provider value={columnState}>
-            <TaskContext.Provider value={{taskState, moveForward, moveBackward}}>
-                <FormContext.Provider value={taskHandler}>
+            <TaskContext.Provider value={{taskState, moveForward, moveBackward,removeTask}}>
+                <FormContext.Provider value={{taskState, setTaskState}}>
                     <Board />
                 </FormContext.Provider>
             </TaskContext.Provider>
