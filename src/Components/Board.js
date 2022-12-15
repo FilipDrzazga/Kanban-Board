@@ -5,9 +5,10 @@ import ColumnContext from '../Context/ColumnContext';
 import Form from './Form';
 
 const Board = () => {
+
     const boardStyle = {
         display: 'flex',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
     }
 
     const columnContext = useContext(ColumnContext);

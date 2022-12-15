@@ -7,7 +7,6 @@ import FormContext from '../Context/FormContext';
 import columnDescription from '../helpers/ColumnDescription';
 import taskDescription from '../helpers/TaskDescription';
 
-
 import Board from './Board';
 
 const App = () => {

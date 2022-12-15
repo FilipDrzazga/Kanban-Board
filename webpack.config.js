@@ -7,6 +7,9 @@ module.exports = {
         path: path.resolve(__dirname, 'build'),
         filename: 'app.min.js',
     },
+    devServer: {
+        hot: true,
+    },
     module: {
         rules: [
             {
