@@ -35,22 +35,22 @@ const Form = () => {
         e.preventDefault();
         if (userName.length === 0 || taskDescription.length === 0) {
             alert('user name or task description input cannot be empty!')
-        }
-        const newTask = {
-            id: uuidv4(),
-            name: taskDescription,
-            idColumn: 1,
-            user: userName
-        };
-
-        const tasksInFirstColumn = taskState.filter(task => {
-            return task.idColumn === columnState[0].id;
-        }).length;
-
-        if (tasksInFirstColumn < columnState[0].limit) {
-            setTaskState(state => { return [...state, newTask] });
         } else {
-            alert(`Column one has limit of ${columnState[0].limit}`)
+            const newTask = {
+                id: uuidv4(),
+                name: taskDescription,
+                idColumn: 1,
+                user: userName
+            };
+            const tasksInFirstColumn = taskState.filter(task => {
+                return task.idColumn === columnState[0].id;
+            }).length;
+
+            if (tasksInFirstColumn < columnState[0].limit) {
+                setTaskState(state => { return [...state, newTask] });
+            } else {
+                alert(`Column one has limit of ${columnState[0].limit}`)
+            }
         }
 
         setTaskDescription('');
